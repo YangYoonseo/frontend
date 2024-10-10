@@ -1,0 +1,29 @@
+.ProductCard {
+  width: 300px;
+  height: 450px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+.ProductCard img {
+  width: 280px;
+  height: 343px;
+}
+
+.ProductCard .product_info h4 {
+  margin: 10px 0;
+  font-size: large;
+}
+
+.ProductCard .product_info .title {
+  margin: 0;
+}
+
+.ProductCard .product_info .product_price {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.ProductCard .product_info .product_price span {
+  color: #ff7777;
+}

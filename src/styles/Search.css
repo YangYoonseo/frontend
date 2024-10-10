@@ -1,0 +1,39 @@
+.Search .Search_p {
+  text-align: center;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.Search .Search_p span {
+  font-weight: bold;
+}
+
+.Search .Search_filteredProducts {
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  flex-wrap: wrap; /*줄 바꿈 허용  */
+  justify-content: space-between;
+}
+
+.Search .Search_filteredProducts .ProductCard {
+  width: 370px;
+  height: 580px;
+}
+
+.Search .Search_filteredProducts .ProductCard img {
+  width: 370px;
+  height: 452px;
+}
+
+.Search .Search_filteredProducts .ProductCard .product_info h4 {
+  font-size: 21px;
+}
+
+.Search .Search_filteredProducts .ProductCard .product_info .title {
+  font-size: 18px;
+}
+
+.Search .Search_filteredProducts .ProductCard .product_info .product_price {
+  font-size: 18px;
+}

@@ -1,0 +1,17 @@
+.Navbar {
+  display: flex;
+  width: 799px;
+  height: 58px;
+  margin: 10px 0px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  justify-content: space-between;
+}
+
+.Navbar .home,
+.Navbar .logo,
+.Navbar .mypage {
+  height: 30px;
+}
