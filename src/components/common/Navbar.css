@@ -1,11 +1,11 @@
 .Navbar {
   display: flex;
-  width: 799px;
-  height: 58px;
-  margin: 10px 0px;
+  width: 1198.5px; /* 799px -> 1.5배 */
+  height: 87px; /* 58px -> 1.5배 */
+  margin: 15px 0px; /* 10px -> 1.5배 */
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px; /* 10px -> 1.5배 */
   flex-shrink: 0;
   justify-content: space-between;
 }
@@ -13,5 +13,5 @@
 .Navbar .home,
 .Navbar .logo,
 .Navbar .mypage {
-  height: 30px;
+  height: 45px; /* 30px -> 1.5배 */
 }

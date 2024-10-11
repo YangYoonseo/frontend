@@ -1,27 +1,46 @@
 .ProductCard {
-  width: 300px;
-  height: 450px;
+  width: 450px; /* 300px -> 1.5배 */
+  height: 675px; /* 450px -> 1.5배 */
   color: rgba(255, 255, 255, 0.8);
   font-weight: 400;
 }
 
-.ProductCard img {
-  width: 280px;
-  height: 343px;
+.ProductCard .product_img {
+  position: relative;
+}
+
+.ProductCard .product_img img {
+  width: 420px; /* 280px -> 1.5배 */
+  height: 514.5px; /* 343px -> 1.5배 */
+}
+
+.ProductCard .LikeButton button {
+  position: absolute;
+  top: 440px;
+  left: 340px;
+  background: none;
+  border: none;
+}
+
+.ProductCard .LikeButton img {
+  width: 70px;
+  height: 70px;
 }
 
 .ProductCard .product_info h4 {
-  margin: 10px 0;
-  font-size: large;
+  margin: 15px 0; /* 10px -> 1.5배 */
+  font-size: 22px;
 }
 
 .ProductCard .product_info .title {
   margin: 0;
+  font-size: 20px;
 }
 
 .ProductCard .product_info .product_price {
   margin: 10px 0;
   font-weight: bold;
+  font-size: 22px; /* 14px -> 1.5배 */
 }
 
 .ProductCard .product_info .product_price span {

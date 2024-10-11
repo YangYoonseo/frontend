@@ -3,20 +3,42 @@ import { useParams, useLocation } from "react-router-dom";
 import Detail from "../components/com_detail/Detail";
 
 const ProductDetail = () => {
-  const { productId } = useParams();
+  const { ProductId } = useParams();
   const location = useLocation();
-  const { brand, title, discount, price, img } = location.state || {};
-  console.log("productId는", productId, brand, title, discount, price, img);
+  const {
+    Category,
+    Brand,
+    ProductName,
+    Price,
+    DiscountRate,
+    OriginalPrice,
+    ProductURL,
+    ImageURL,
+  } = location.state || {};
+  console.log(
+    "productId는",
+    Category,
+    Brand,
+    ProductName,
+    Price,
+    DiscountRate,
+    OriginalPrice,
+    ProductURL,
+    ImageURL
+  );
   return (
     <div className="ProductDetail">
       <Navbar />
       <Detail
-        productId={productId}
-        brand={brand}
-        title={title}
-        discount={discount}
-        price={price}
-        img={img}
+        ProductId={ProductId}
+        Category={Category}
+        Brand={Brand}
+        ProductName={ProductName}
+        Price={Price}
+        DiscountRate={DiscountRate}
+        OriginalPrice={OriginalPrice}
+        ProductURL={ProductURL}
+        ImageURL={ImageURL}
       />
     </div>
   );

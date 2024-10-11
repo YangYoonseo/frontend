@@ -38,13 +38,16 @@ const Chart = ({ title }) => {
       <div className="Chart-list">
         {products.map((product) => (
           <ProductCard
-            key={product.productId}
-            productId={product.productId}
-            brand={product.brand}
-            title={product.title}
-            discount={product.discount}
-            price={product.price}
-            img={product.img}
+            key={product.ProductId}
+            productId={product.ProductId}
+            Category={product.Category}
+            Brand={product.Brand}
+            ProductName={product.ProductName}
+            Price={product.Price}
+            DiscountRate={product.DiscountRate}
+            OriginalPrice={product.OriginalPrice}
+            ProductURL={product.ProductURL}
+            ImageURL={product.ImageURL}
           />
         ))}
       </div>

@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { SearchContext } from "../../App";
 import ProductCard from "../com_home/ProductCard";
 import "../../styles/Search.css";
 
-const Search = ({ searchQuery }) => {
+const Search = () => {
+  const { searchQuery } = useContext(SearchContext);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -25,11 +27,12 @@ const Search = ({ searchQuery }) => {
   useEffect(() => {
     if (searchQuery) {
       const filtered = products.filter((product) =>
-        product.title?.toLowerCase().includes(searchQuery.toLowerCase().trim())
+        product.ProductName?.toLowerCase().includes(
+          searchQuery.toLowerCase().trim()
+        )
       );
       setFilteredProducts(filtered);
       console.log("필터된 데이터", filtered);
-      console.log("제목들", products[0].title);
     } else {
       setFilteredProducts(products);
     }
@@ -44,13 +47,16 @@ const Search = ({ searchQuery }) => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
-              key={product.productId}
-              productId={product.productId}
-              brand={product.brand}
-              title={product.title}
-              discount={product.discount}
-              price={product.price}
-              img={product.img}
+              key={product.ProductId}
+              ProductId={product.ProductId}
+              Category={product.Category}
+              Brand={product.Brand}
+              ProductName={product.ProductName}
+              Price={product.Price}
+              DiscountRate={product.DiscountRate}
+              OriginalPrice={product.OriginalPrice}
+              ProductURL={product.ProductURL}
+              ImageURL={product.ImageURL}
             />
           ))
         ) : (

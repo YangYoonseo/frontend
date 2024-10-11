@@ -1,8 +1,15 @@
 import "./SearchBox.css";
 import { IoIosSearch } from "react-icons/io";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../App";
 
-const SearchBox = ({ setSearchQuery }) => {
+import leftButton from "../../assets/img_common/leftButton.svg";
+import rightButton from "../../assets/img_common/rightButton.svg";
+
+const SearchBox = () => {
+  const nav = useNavigate();
+  const { searchQuery, setSearchQuery } = useContext(SearchContext);
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState("name");
 
@@ -11,6 +18,9 @@ const SearchBox = ({ setSearchQuery }) => {
     if (search.trim()) {
       setSearchQuery(search);
       console.log("검색창:", search);
+      // 검색창 초기화
+      setSearch("");
+      nav("/product_search");
     } else {
       alert("입력 ㄱ");
     }
@@ -20,6 +30,15 @@ const SearchBox = ({ setSearchQuery }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
+    }
+  };
+
+  // 상품명/상품코드 변경
+  const onClickSearch = () => {
+    if (searchType === "name") {
+      setSearchType("code");
+    } else {
+      setSearchType("name");
     }
   };
 
@@ -39,18 +58,14 @@ const SearchBox = ({ setSearchQuery }) => {
       <div className="option">
         <p>검색 옵션</p>
         <div>
-          <button
-            className="searchButton searchButton_name"
-            onClick={() => setSearchType("name")}
-          >
-            상품명
-          </button>
-          <button
-            className="searchButton searchButton_code"
-            onClick={() => setSearchType("code")}
-          >
-            상품코드
-          </button>
+          <p className={`productName productName_${searchType}`}>상품명</p>
+          <p>/</p>
+          <p className={`productCode productCode_${searchType}`}>상품코드</p>
+          <img
+            src={searchType === "name" ? leftButton : rightButton}
+            alt=""
+            onClick={onClickSearch}
+          />
         </div>
       </div>
     </div>

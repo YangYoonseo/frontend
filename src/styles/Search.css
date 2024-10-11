@@ -2,38 +2,50 @@
   text-align: center;
   margin: 0;
   color: rgba(255, 255, 255, 0.6);
+  font-size: 25px; /* 14px -> 1.5배 */
 }
 
 .Search .Search_p span {
   font-weight: bold;
+  font-size: 25px; /* 20px -> 1.5배 */
 }
 
 .Search .Search_filteredProducts {
   margin: 0;
-  padding: 40px 20px;
+  padding: 60px 30px;
   display: flex;
-  flex-wrap: wrap; /*줄 바꿈 허용  */
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .Search .Search_filteredProducts .ProductCard {
-  width: 370px;
-  height: 580px;
+  width: 270px; /* 300px로 설정 */
+  height: 495px; /* 비율에 맞게 조정 */
 }
 
-.Search .Search_filteredProducts .ProductCard img {
-  width: 370px;
-  height: 452px;
+.Search .Search_filteredProducts .ProductCard .product_img img {
+  width: 270px; /* 300px로 설정 */
+  height: 331px; /* 가로:세로 비율 유지, 세로 약 368.22px */
+}
+
+.Search .Search_filteredProducts .ProductCard .LikeButton button {
+  top: 280px;
+  left: 215px;
+}
+
+.Search .Search_filteredProducts .ProductCard .LikeButton img {
+  width: 45px;
+  height: 45px;
 }
 
 .Search .Search_filteredProducts .ProductCard .product_info h4 {
-  font-size: 21px;
+  font-size: 21px; /* 비율에 맞게 조정 */
 }
 
 .Search .Search_filteredProducts .ProductCard .product_info .title {
-  font-size: 18px;
+  font-size: 18px; /* 비율에 맞게 조정 */
 }
 
 .Search .Search_filteredProducts .ProductCard .product_info .product_price {
-  font-size: 18px;
+  font-size: 21px; /* 비율에 맞게 조정 */
 }

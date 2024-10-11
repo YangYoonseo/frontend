@@ -1,28 +1,26 @@
 .HomeLoggedOut {
-  height: 1600px;
+  height: 2400px; /* 1600px -> 1.5배 */
 }
 
 .Home .Home_ment p {
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 150%;
+  line-height: 225%; /* 150% -> 225% */
 }
 
 .Home .Home_ment p:nth-of-type(1) {
-  margin: 20px 0;
-  font-size: 26px;
+  margin: 30px 0; /* 20px -> 1.5배 */
+  font-size: 33px;
   font-weight: 600;
 }
 
 .Home .Home_ment p:nth-of-type(2) {
-  font-size: 20px;
-
-  padding: 10px;
+  font-size: 25px;
+  padding: 15px; /* 10px -> 1.5배 */
 }
 
 .Home .Line34 {
-  width: 800px;
-  height: 10px;
-  margin: 0;
+  width: 1200px; /* 800px -> 1.5배 */
+  height: 15px; /* 10px -> 1.5배 */
   margin-top: 25px;
 }

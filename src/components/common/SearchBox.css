@@ -1,8 +1,8 @@
 .Searching {
   display: inline-flex;
-  width: 759px;
-  height: 40px;
-  padding: 14px 20px;
+  width: 1138.8px; /* 759px -> 1.5배 */
+  height: 60px; /* 40px -> 1.5배 */
+  padding: 21px 30px; /* 14px 20px -> 1.5배 */
   justify-content: space-between;
   align-items: center;
   background-color: white;
@@ -11,24 +11,39 @@
 
 .SearchBox .searchInput {
   color: black;
-  width: 700px;
-  height: 33px;
+  width: 1050px; /* 700px -> 1.5배 */
+  height: 49.5px; /* 33px -> 1.5배 */
   border: none;
   outline: none;
-
-  font-size: 18px;
+  font-size: 24px; /* 18px -> 1.5배 */
   font-weight: 700;
-  line-height: 140%; /* 22.4px */
+  line-height: 29.4px; /* 22.4px -> 1.5배 */
 }
 
 .SearchBox .IoIosSearch {
-  width: 33px;
-  height: 33px;
+  width: 49.5px; /* 33px -> 1.5배 */
+  height: 49.5px; /* 33px -> 1.5배 */
 }
 
 .SearchBox .option {
   color: rgba(255, 255, 255, 0.6);
+  font-size: 22px;
   display: flex;
-  padding: 0 20px;
+  padding: 0 30px; /* 20px -> 1.5배 */
   justify-content: space-between;
+}
+
+.SearchBox .option div {
+  display: flex;
+  gap: 6px;
+}
+
+.SearchBox .option img {
+  padding-left: 10px;
+  width: 55px;
+}
+
+.SearchBox .option .productName_name,
+.SearchBox .option .productCode_code {
+  color: #fff;
 }
