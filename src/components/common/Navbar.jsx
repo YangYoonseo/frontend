@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+import { FiUser } from "react-icons/fi";
 
 // 이미지
 import home from "../../assets/img_common/home.svg";
@@ -21,9 +22,7 @@ const Navbar = () => {
         }}
       />
       <img src={logo} alt="" className="logo" />
-      <img
-        src={mypage}
-        alt=""
+      <FiUser
         className="mypage"
         onClick={() => {
           alert("아직 로그인 기능이 완성되지 않았습니다");

@@ -8,18 +8,35 @@ import rightButton from "../../assets/img_common/rightButton.svg";
 import { ResponsiveContainer } from "recharts";
 import LikeButton from "../common/LikeButton";
 // 필요한 Recharts 컴포넌트를 import
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ReferenceLine,
+} from "recharts";
 
 const Detail = ({ ProductId }) => {
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
+  const [loadingKakao, setLoadingKakao] = useState(true);
   const [term, setTerm] = useState("three-month"); // 3개월/전체
+
+  // 카카오 SDK 초기화
+  useEffect(() => {
+    if (window.Kakao) {
+      window.Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+      setLoadingKakao(false);
+    }
+  }, []);
 
   useEffect(() => {
     const Detailed = async () => {
-      const url = "https://hongdae.site";
       try {
-        const response = await axios.get(`${url}/api/product/${ProductId}`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_APIT_URL}/api/product/${ProductId}`
+        );
         console.log("데이터 디테일 불러오기 성공", response.data.data);
         setProduct(response.data.data);
         setLoading(false);
@@ -31,8 +48,8 @@ const Detail = ({ ProductId }) => {
     Detailed();
   }, [ProductId]);
 
-  if (loading) {
-    return <p>loading...</p>;
+  if (loading || loadingKakao) {
+    return <p></p>;
   }
 
   //   3개월/전체 변동 함수
@@ -44,13 +61,20 @@ const Detail = ({ ProductId }) => {
     }
   };
 
-  // 가격변동 mockData
-  const data = [
-    { date: new Date("2023-05-19").getTime(), price: 12800 },
-    { date: new Date("2023-05-28").getTime(), price: 21900 },
-    { date: new Date("2023-08-02").getTime(), price: 21900 },
-    { date: new Date("2023-08-19").getTime(), price: 14700 },
-  ];
+  const data = product.priceHistoryList.map((item) => ({
+    date: new Date(item.date).getTime(),
+    price: item.price,
+  }));
+
+  // 날짜 형식 변환
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp); // timestamp 사용
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  };
+
+  // Y축 범위를 비율로 설정하는 부분
+  const priceRange = product.highestPrice - product.lowestPrice;
+  const margin = priceRange * 0.1; // 가격 차이의 10%를 margin으로 설정
 
   //   추천 상품 mockData
   const recommendedProducts = [
@@ -85,38 +109,49 @@ const Detail = ({ ProductId }) => {
     window.open(product.productURL, "_blank");
   };
 
-  //   링크 공유 함수
-  //   카톡 공유 API 사용할 수 있으면 그걸로 변경
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: document.title, // 현재 페이지 제목
-          text: "링크를 확인해보세요!",
-          url: window.location.href, // 현재 페이지의 URL
-        });
-        console.log("링크 공유 성공");
-      } catch (error) {
-        console.error("링크 공유 에러", error);
-      }
-    } else {
-      console.log("Web share API가 없음");
-    }
+  //   카카오톡 링크 공유
+  const KaKaoShare = (productName, imageURL, price) => {
+    window.Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: "MUSINSA OBSERVER",
+        description: `${productName} ${price}원`,
+        imageUrl: imageURL,
+        link: {
+          mobileWebUrl: "https://developers.kakao.com",
+          webUrl: "https://developers.kakao.com",
+        },
+      },
+      buttons: [
+        {
+          title: "웹으로 이동",
+          link: {
+            mobileWebUrl: "https://developers.kakao.com",
+            webUrl: "https://developers.kakao.com",
+          },
+        },
+        {
+          title: "앱으로 이동",
+          link: {
+            mobileWebUrl: "https://developers.kakao.com",
+            webUrl: "https://developers.kakao.com",
+          },
+        },
+      ],
+    });
   };
 
-  // 날짜 형식 변환
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp); // timestamp 사용
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+  const onClickKakao = () => {
+    KaKaoShare(
+      product.productName,
+      product.imageURL,
+      product.price.toLocaleString()
+    );
   };
 
   // x축 시작, 끝 날짜
   const minDate = Math.min(...data.map((item) => item.date)); // 첫 번째 날짜
   const maxDate = Math.max(...data.map((item) => item.date)); // 마지막 날짜
-
-  // Y축 시작, 끝 가격
-  const minPrice = Math.min(...data.map((item) => item.price));
-  const maxPrice = Math.max(...data.map((item) => item.price));
 
   //   평균 가격
   const avgPrice =
@@ -131,7 +166,12 @@ const Detail = ({ ProductId }) => {
             <p>{product.brand}</p>
             <div>
               <LikeButton />
-              <img src={share} alt="" className="share" onClick={handleShare} />
+              <img
+                src={share}
+                alt=""
+                className="share"
+                onClick={onClickKakao}
+              />
             </div>
           </div>
           <h3>{product.productName}</h3>
@@ -151,14 +191,18 @@ const Detail = ({ ProductId }) => {
                 <img
                   src={term === "three-month" ? leftButton : rightButton}
                   alt=""
-                  onClick={onClickTerm}
+                  // onClick={onClickTerm}
+                  // 전체 그래프 안 만들어짐
                 />
               </div>
               <p className="graph_p">가격 그래프</p>
             </div>
             <div className="graph_div">
               <ResponsiveContainer width="100%">
-                <LineChart data={data}>
+                <LineChart
+                  data={data}
+                  margin={{ top: 0, right: 10, left: 30, bottom: 0 }}
+                >
                   <CartesianGrid stroke="#FFFFFF33" strokeDasharray="2 1" />
                   <XAxis
                     dataKey="date"
@@ -167,14 +211,42 @@ const Detail = ({ ProductId }) => {
                     type="number"
                     domain={[minDate, maxDate]} // 첫 번째 날짜부터 마지막 날짜로 설정
                     stroke="#FFFFFF"
-                    tick={{ fontSize: 15 }}
+                    tick={{ fontSize: 17 }}
+                    interval="preserveStartEnd" // 시작과 끝을 보존하는 설정
                   />
                   <YAxis
-                    domain={[minPrice - 5000, maxPrice + 5000]}
+                    domain={[
+                      product.lowestPrice - margin,
+                      product.highestPrice + margin,
+                    ]}
+                    ticks={data.map((item) => item.price).sort((a, b) => a - b)} // 정렬된 ticks
                     stroke="#FFFFFF"
-                    tick={{ fontSize: 15 }}
+                    tickFormatter={(value) => value.toLocaleString()} // y값 포맷팅
+                    tickLine={false}
+                    tick={(props) => {
+                      const { x, y, payload } = props;
+                      const isCurrentPrice =
+                        payload.value === product.currentPrice;
+
+                      return (
+                        <text
+                          x={x}
+                          y={y}
+                          fill={isCurrentPrice ? "#FF7777" : "#FFFFFF"} // currentPrice일 때 빨간색
+                          fontSize={17}
+                          textAnchor="end"
+                        >
+                          {payload.value.toLocaleString()}
+                        </text>
+                      );
+                    }}
                   />
                   <Line type="linear" dataKey="price" stroke="#FF7777" />
+                  <ReferenceLine
+                    y={product.currentPrice || 0}
+                    stroke="#FF7777"
+                    strokeDasharray="10 10"
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>

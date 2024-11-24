@@ -11,9 +11,14 @@
 }
 
 .Navbar .home,
-.Navbar .logo,
-.Navbar .mypage {
+.Navbar .logo {
   height: 45px; /* 30px -> 1.5배 */
+}
+
+.Navbar .mypage {
+  color: white;
+  width: 47px;
+  height: 45px;
 }
 
 @media (max-width: 1300px) {

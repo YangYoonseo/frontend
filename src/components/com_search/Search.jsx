@@ -11,11 +11,13 @@ const Search = () => {
   useEffect(() => {
     const Filtering = async () => {
       if (searchQuery) {
-        const url = "https://hongdae.site";
         try {
-          const response = await axios.get(`${url}/api/product/search`, {
-            params: { query: searchQuery },
-          });
+          const response = await axios.get(
+            `${import.meta.env.VITE_APIT_URL}/api/product/search`,
+            {
+              params: { query: searchQuery },
+            }
+          );
           console.log("데이터 필터 성공", response.data.data);
           setFilteredProducts(response.data.data);
         } catch (error) {
