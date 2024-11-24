@@ -1,29 +1,39 @@
 import "../../styles/Detail.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Line34 from "../../assets/img/Line34.svg";
 import share from "../../assets/img/share.svg";
 import leftButton from "../../assets/img_common/leftButton.svg";
 import rightButton from "../../assets/img_common/rightButton.svg";
-
-import ProductCard from "../com_home/ProductCard";
+import { ResponsiveContainer } from "recharts";
 import LikeButton from "../common/LikeButton";
 // 필요한 Recharts 컴포넌트를 import
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 
-const Detail = ({
-  ProductId,
-  Category,
-  Brand,
-  ProductName,
-  Price,
-  DiscountRate,
-  OriginalPrice,
-  ProductURL,
-  ImageURL,
-}) => {
-  // 3개월/전체
-  const [term, setTerm] = useState("three-month");
+const Detail = ({ ProductId }) => {
+  const [product, setProduct] = useState();
+  const [loading, setLoading] = useState(true);
+  const [term, setTerm] = useState("three-month"); // 3개월/전체
+
+  useEffect(() => {
+    const Detailed = async () => {
+      const url = "https://hongdae.site";
+      try {
+        const response = await axios.get(`${url}/api/product/${ProductId}`);
+        console.log("데이터 디테일 불러오기 성공", response.data.data);
+        setProduct(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.log("데이터 디테일 불러오기 실패", error);
+      }
+    };
+
+    Detailed();
+  }, [ProductId]);
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
 
   //   3개월/전체 변동 함수
   const onClickTerm = () => {
@@ -72,7 +82,7 @@ const Detail = ({
 
   //   ProductURL 열기
   const handleButtonClick = () => {
-    window.open(ProductURL, "_blank");
+    window.open(product.productURL, "_blank");
   };
 
   //   링크 공유 함수
@@ -115,20 +125,21 @@ const Detail = ({
   return (
     <div className="Detail">
       <div className="Detail_main">
-        <img src={ImageURL} alt="" className="productImg" />
+        <img src={product.imageURL} alt="" className="productImg" />
         <div className="title">
           <div className="like_share">
-            <p>{Brand}</p>
+            <p>{product.brand}</p>
             <div>
               <LikeButton />
               <img src={share} alt="" className="share" onClick={handleShare} />
             </div>
           </div>
-          <h3>{ProductName}</h3>
+          <h3>{product.productName}</h3>
           <div className="link_price">
             <button onClick={handleButtonClick}>무신사 구매 링크</button>
             <p>
-              <span>{DiscountRate}</span> {Price.toLocaleString()}원
+              <span>{product.discountRate}%</span>{" "}
+              {product.price.toLocaleString()}원
             </p>
           </div>
           <div className="priceGraph">
@@ -145,36 +156,40 @@ const Detail = ({
               </div>
               <p className="graph_p">가격 그래프</p>
             </div>
+            <div className="graph_div">
+              <ResponsiveContainer width="100%">
+                <LineChart data={data}>
+                  <CartesianGrid stroke="#FFFFFF33" strokeDasharray="2 1" />
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={formatDate}
+                    scale="time"
+                    type="number"
+                    domain={[minDate, maxDate]} // 첫 번째 날짜부터 마지막 날짜로 설정
+                    stroke="#FFFFFF"
+                    tick={{ fontSize: 15 }}
+                  />
+                  <YAxis
+                    domain={[minPrice - 5000, maxPrice + 5000]}
+                    stroke="#FFFFFF"
+                    tick={{ fontSize: 15 }}
+                  />
+                  <Line type="linear" dataKey="price" stroke="#FF7777" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
 
-            <LineChart width={525} height={305} data={data}>
-              <CartesianGrid stroke="#FFFFFF33" strokeDasharray="2 1" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={formatDate}
-                scale="time"
-                type="number"
-                domain={[minDate, maxDate]} // 첫 번째 날짜부터 마지막 날짜로 설정
-                stroke="#FFFFFF"
-                tick={{ fontSize: 15 }}
-              />
-              <YAxis
-                domain={[minPrice - 5000, maxPrice + 5000]}
-                stroke="#FFFFFF"
-                tick={{ fontSize: 15 }}
-              />
-              <Line type="linear" dataKey="price" stroke="#FF7777" />
-            </LineChart>
             <div className="price4">
-              <p>정가: {OriginalPrice.toLocaleString()}원</p>
-              <p>최고 할인가: {minPrice.toLocaleString()}원</p>
-              <p>최저 할인가: {maxPrice.toLocaleString()}원</p>
+              <p>정가: {product.originalPrice.toLocaleString()}원</p>
+              <p>최고가: {product.highestPrice.toLocaleString()}원</p>
+              <p>최저가: {product.lowestPrice.toLocaleString()}원</p>
               <p>평균 가격: {avgPrice.toLocaleString()}원</p>
             </div>
             <img src={Line34} alt="" className="Line34" />
           </div>
         </div>
       </div>
-      <div className="recommend">
+      {/* <div className="recommend">
         <p className="recommend_ment">추천 유사 상품</p>
         <div className="recomment_map">
           {recommendedProducts.map((product) => (
@@ -192,7 +207,7 @@ const Detail = ({
             />
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

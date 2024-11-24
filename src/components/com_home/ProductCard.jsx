@@ -1,10 +1,12 @@
 import "../../styles/ProductCard.css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import LikeButton from "../common/LikeButton";
+
+import logo from "../../assets/img_common/logo.svg";
 
 const ProductCard = ({
   ProductId,
-  Category,
   Brand,
   ProductName,
   Price,
@@ -14,34 +16,24 @@ const ProductCard = ({
   ImageURL,
 }) => {
   const nav = useNavigate();
+  const [imgSrc, setImgSrc] = useState(ImageURL);
 
   return (
     <div
       className="ProductCard"
       onClick={() => {
-        nav(`/product_detail/${ProductId}`, {
-          state: {
-            Category,
-            Brand,
-            ProductName,
-            Price,
-            DiscountRate,
-            OriginalPrice,
-            ProductURL,
-            ImageURL,
-          },
-        });
+        nav(`/product_detail/${ProductId}`);
       }}
     >
       <div className="product_img">
-        <img src={ImageURL} alt="사진이 안 보여" />
+        <img src={imgSrc} alt="상품 이미지" onError={() => setImgSrc(logo)} />
         <LikeButton />
       </div>
       <div className="product_info">
         <h4>{Brand}</h4>
         <p className="title">{ProductName}</p>
         <p className="product_price">
-          <span className="discount">{DiscountRate}</span>{" "}
+          <span className="discount">{DiscountRate}% </span>
           {Price.toLocaleString()}원
         </p>
       </div>

@@ -16,13 +16,19 @@ const Navbar = () => {
         src={home}
         alt=""
         className="home"
-        // 일단 로그아웃 페이지로 이동
         onClick={() => {
-          nav("/main_loggedOut");
+          nav("/");
         }}
       />
       <img src={logo} alt="" className="logo" />
-      <img src={mypage} alt="" className="mypage" />
+      <img
+        src={mypage}
+        alt=""
+        className="mypage"
+        onClick={() => {
+          alert("아직 로그인 기능이 완성되지 않았습니다");
+        }}
+      />
     </div>
   );
 };

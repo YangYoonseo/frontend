@@ -1,6 +1,6 @@
 import "./SearchBox.css";
 import { IoIosSearch } from "react-icons/io";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../App";
 
@@ -10,19 +10,17 @@ import rightButton from "../../assets/img_common/rightButton.svg";
 const SearchBox = () => {
   const nav = useNavigate();
   const { searchQuery, setSearchQuery } = useContext(SearchContext);
-  const [search, setSearch] = useState("");
+  const searchRef = useRef("");
   const [searchType, setSearchType] = useState("name");
 
   //   검색 함수
   const handleSearch = () => {
-    if (search.trim()) {
-      setSearchQuery(search);
-      console.log("검색창:", search);
-      // 검색창 초기화
-      setSearch("");
+    if (searchRef.current.trim()) {
+      setSearchQuery(searchRef.current);
+      console.log("검색창:", searchRef.current);
       nav("/product_search");
     } else {
-      alert("입력 ㄱ");
+      alert("원하는 상품을 검색하세요!");
     }
   };
 
@@ -31,6 +29,11 @@ const SearchBox = () => {
     if (e.key === "Enter") {
       handleSearch();
     }
+  };
+
+  // 검색창 입력값 업데이트
+  const handleInputChange = (e) => {
+    searchRef.current = e.target.value;
   };
 
   // 상품명/상품코드 변경
@@ -47,8 +50,8 @@ const SearchBox = () => {
       <div className="Searching">
         <input
           type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          defaultValue={searchRef.current}
+          onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="원하는 상품을 검색해보세요!"
           className="searchInput"

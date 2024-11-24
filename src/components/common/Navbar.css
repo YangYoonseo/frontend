@@ -15,3 +15,10 @@
 .Navbar .mypage {
   height: 45px; /* 30px -> 1.5배 */
 }
+
+@media (max-width: 1300px) {
+  .Navbar {
+    width: 94%;
+    margin: 15px auto;
+  }
+}
