@@ -5,9 +5,6 @@ import { FiUser } from "react-icons/fi";
 // 이미지
 import home from "../../assets/img_common/home.svg";
 import logo from "../../assets/img_common/logo.svg";
-import mypage from "../../assets/img_common/myPage.svg";
-// 로그인 했을때 마이페이지
-import mypage_login from "../../assets/img_common/myPage_login.svg";
 
 const Navbar = () => {
   const nav = useNavigate();

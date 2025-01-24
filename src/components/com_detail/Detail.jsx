@@ -123,15 +123,15 @@ const Detail = ({ ProductId }) => {
           description: `${productName} ${price}원`,
           imageUrl: imageURL,
           link: {
-            mobileWebUrl: `http://localhost:5173/product_detail/${ProductId}`,
-            webUrl: `http://localhost:5173/product_detail/${ProductId}`,
+            mobileWebUrl: `https://www.google.com/search?q=js+let+%EB%A7%90%EA%B3%A0&sca_esv=5791a0164e19b13c&sxsrf=AHTn8zpT3fPC9ohiAe2o35_tMhInD9IPCQ%3A1737642797065&ei=LVOSZ-HXA-Khvr0PsevPyA8&ved=0ahUKEwihoqnth4yLAxXikK8BHbH1E_kQ4dUDCBI&uact=5&oq=js+let+%EB%A7%90%EA%B3%A0&gs_lp=Egxnd3Mtd2l6LXNlcnAiDWpzIGxldCDrp5Dqs6AyBRAhGKABSPkjUJoHWMMhcAN4AJABAZgBqAGgAfgOqgEEMC4xM7gBA8gBAPgBAZgCDaACxguoAgrCAgcQIxgnGOoCwgILEAAYgAQYsQMYgwHCAhEQLhiABBixAxjRAxiDARjHAcICBBAAGAPCAgQQLhgDwgIFEAAYgATCAg4QLhiABBixAxjRAxjHAcICBBAjGCfCAgsQABiABBiRAhiKBcICBRAuGIAEwgILEC4YgAQY0QMYxwHCAgoQABiABBhDGIoFwgIREC4YgAQYxwEYmAUYmQUYrwHCAggQABiABBjLAZgDC_EFf3vLEv_8vK6SBwQzLjEwoAeXUA&sclient=gws-wiz-serp`,
+            webUrl: `https://www.google.com/search?q=js+let+%EB%A7%90%EA%B3%A0&sca_esv=5791a0164e19b13c&sxsrf=AHTn8zpT3fPC9ohiAe2o35_tMhInD9IPCQ%3A1737642797065&ei=LVOSZ-HXA-Khvr0PsevPyA8&ved=0ahUKEwihoqnth4yLAxXikK8BHbH1E_kQ4dUDCBI&uact=5&oq=js+let+%EB%A7%90%EA%B3%A0&gs_lp=Egxnd3Mtd2l6LXNlcnAiDWpzIGxldCDrp5Dqs6AyBRAhGKABSPkjUJoHWMMhcAN4AJABAZgBqAGgAfgOqgEEMC4xM7gBA8gBAPgBAZgCDaACxguoAgrCAgcQIxgnGOoCwgILEAAYgAQYsQMYgwHCAhEQLhiABBixAxjRAxiDARjHAcICBBAAGAPCAgQQLhgDwgIFEAAYgATCAg4QLhiABBixAxjRAxjHAcICBBAjGCfCAgsQABiABBiRAhiKBcICBRAuGIAEwgILEC4YgAQY0QMYxwHCAgoQABiABBhDGIoFwgIREC4YgAQYxwEYmAUYmQUYrwHCAggQABiABBjLAZgDC_EFf3vLEv_8vK6SBwQzLjEwoAeXUA&sclient=gws-wiz-serp`,
           },
         },
         buttons: [
           {
             title: "웹으로 이동",
             link: {
-              mobileWebUrl: `http://localhost:5173/product_detail/${ProductId}`,
+              mobileWebUrl: `https://www.google.com/search?q=js+let+%EB%A7%90%EA%B3%A0&sca_esv=5791a0164e19b13c&sxsrf=AHTn8zpT3fPC9ohiAe2o35_tMhInD9IPCQ%3A1737642797065&ei=LVOSZ-HXA-Khvr0PsevPyA8&ved=0ahUKEwihoqnth4yLAxXikK8BHbH1E_kQ4dUDCBI&uact=5&oq=js+let+%EB%A7%90%EA%B3%A0&gs_lp=Egxnd3Mtd2l6LXNlcnAiDWpzIGxldCDrp5Dqs6AyBRAhGKABSPkjUJoHWMMhcAN4AJABAZgBqAGgAfgOqgEEMC4xM7gBA8gBAPgBAZgCDaACxguoAgrCAgcQIxgnGOoCwgILEAAYgAQYsQMYgwHCAhEQLhiABBixAxjRAxiDARjHAcICBBAAGAPCAgQQLhgDwgIFEAAYgATCAg4QLhiABBixAxjRAxjHAcICBBAjGCfCAgsQABiABBiRAhiKBcICBRAuGIAEwgILEC4YgAQY0QMYxwHCAgoQABiABBhDGIoFwgIREC4YgAQYxwEYmAUYmQUYrwHCAggQABiABBjLAZgDC_EFf3vLEv_8vK6SBwQzLjEwoAeXUA&sclient=gws-wiz-serp`,
               webUrl: `http://localhost:5173/product_detail/${ProductId}`,
             },
           },
