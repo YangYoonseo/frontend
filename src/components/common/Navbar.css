@@ -21,6 +21,20 @@
   height: 45px;
 }
 
+/* 모바일 */
+@media (max-width: 480px) {
+  .Navbar {
+    gap: 5%;
+    justify-content: flex-end;
+  }
+
+  .Navbar .home,
+  .Navbar .logo,
+  .Navbar .mypage {
+    width: 60%;
+  }
+}
+
 @media (max-width: 1300px) {
   .Navbar {
     width: 94%;

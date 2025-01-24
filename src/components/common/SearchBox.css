@@ -48,6 +48,13 @@
   color: #fff;
 }
 
+/* 모바일 */
+@media (max-width: 480px) {
+  .SearchBox p {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 1300px) {
   .SearchBox {
     width: 100%;
@@ -56,7 +63,7 @@
   }
 
   .SearchBox .Searching {
-    width: 94%;
+    width: 90%;
     padding: 14px 20px; /* padding도 줄여서 반응형에 맞게 조정 */
     align-self: center;
   }
