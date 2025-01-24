@@ -1,12 +1,11 @@
 import "../../styles/Detail.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Line34 from "../../assets/img/Line34.svg";
 import share from "../../assets/img/share.svg";
-import leftButton from "../../assets/img_common/leftButton.svg";
-import rightButton from "../../assets/img_common/rightButton.svg";
 import { ResponsiveContainer } from "recharts";
 import LikeButton from "../common/LikeButton";
+import LoadingSpinner from "../com_search/LoadingSpinner";
 // 필요한 Recharts 컴포넌트를 import
 import {
   LineChart,
@@ -21,13 +20,28 @@ const Detail = ({ ProductId }) => {
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
   const [loadingKakao, setLoadingKakao] = useState(true);
-  const [term, setTerm] = useState("three-month"); // 3개월/전체
 
   // 카카오 SDK 초기화
   useEffect(() => {
-    if (window.Kakao) {
-      window.Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
-      setLoadingKakao(false);
+    const loadKakaoSDK = () => {
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        try {
+          window.Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+          setLoadingKakao(false);
+        } catch (error) {
+          // console.error("Kakao SDK initialization error:", error);
+        }
+      }
+    };
+
+    // Kakao SDK가 로드되었는지 확인
+    if (document.readyState === "complete") {
+      loadKakaoSDK();
+    } else {
+      window.addEventListener("load", loadKakaoSDK);
+      return () => {
+        window.removeEventListener("load", loadKakaoSDK);
+      };
     }
   }, []);
 
@@ -37,34 +51,29 @@ const Detail = ({ ProductId }) => {
         const response = await axios.get(
           `${import.meta.env.VITE_APIT_URL}/api/product/${ProductId}`
         );
-        console.log("데이터 디테일 불러오기 성공", response.data.data);
+        // console.log("데이터 디테일 불러오기 성공", response.data.data);
         setProduct(response.data.data);
         setLoading(false);
       } catch (error) {
-        console.log("데이터 디테일 불러오기 실패", error);
+        // console.log("데이터 디테일 불러오기 실패", error);
       }
     };
 
     Detailed();
   }, [ProductId]);
 
-  if (loading || loadingKakao) {
-    return <p></p>;
+  const data = useMemo(
+    () =>
+      product?.priceHistoryList.map((item) => ({
+        date: new Date(item.date).getTime(),
+        price: item.price,
+      })),
+    [product]
+  );
+
+  if (loading || !product) {
+    return <LoadingSpinner />;
   }
-
-  //   3개월/전체 변동 함수
-  const onClickTerm = () => {
-    if (term === "three-month") {
-      setTerm("whole");
-    } else {
-      setTerm("three-month");
-    }
-  };
-
-  const data = product.priceHistoryList.map((item) => ({
-    date: new Date(item.date).getTime(),
-    price: item.price,
-  }));
 
   // 날짜 형식 변환
   const formatDate = (timestamp) => {
@@ -76,76 +85,46 @@ const Detail = ({ ProductId }) => {
   const priceRange = product.highestPrice - product.lowestPrice;
   const margin = priceRange * 0.1; // 가격 차이의 10%를 margin으로 설정
 
-  //   추천 상품 mockData
-  const recommendedProducts = [
-    {
-      ProductId: 0,
-      Category: "아우터",
-      Brand: "트릴리온",
-      ProductName: "유니섹스 발마칸 더플 숏 코트 (BEIGE)",
-      Price: 98000,
-      DiscountRate: "24%",
-      OriginalPrice: 128900,
-      ProductURL: "https://www.musinsa.com/app/goods/2862908",
-      ImageURL:
-        "https://image.msscdn.net/thumbnails/images/goods_img/20221014/2862908/2862908_1_big.jpg?w=780",
-    },
-    {
-      ProductId: 1,
-      Category: "아우터",
-      Brand: "데밀",
-      ProductName: "LOT.062 파이오니어 셀비지 데님자켓 인디고",
-      Price: 223200,
-      DiscountRate: "20%",
-      OriginalPrice: 279000,
-      ProductURL: "https://www.musinsa.com/app/goods/3510056",
-      ImageURL:
-        "https://image.msscdn.net/thumbnails/images/goods_img/20230829/3510056/3510056_17147199908980_big.jpg?w=780",
-    },
-  ];
-
   //   ProductURL 열기
   const handleButtonClick = () => {
     window.open(product.productURL, "_blank");
   };
 
   //   카카오톡 링크 공유
-  const KaKaoShare = (productName, imageURL, price) => {
-    window.Kakao.Share.sendDefault({
-      objectType: "feed",
-      content: {
-        title: "MUSINSA OBSERVER",
-        description: `${productName} ${price}원`,
-        imageUrl: imageURL,
-        link: {
-          mobileWebUrl: "https://developers.kakao.com",
-          webUrl: "https://developers.kakao.com",
-        },
-      },
-      buttons: [
-        {
-          title: "웹으로 이동",
+  const KaKaoShare = (productName, imageURL, price, ProductId) => {
+    try {
+      window.Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "MUSINSA OBSERVER",
+          description: `${productName} ${price}원`,
+          imageUrl: imageURL,
           link: {
-            mobileWebUrl: "https://developers.kakao.com",
-            webUrl: "https://developers.kakao.com",
+            mobileWebUrl: `http://localhost:5173/product_detail/${ProductId}`,
+            webUrl: `http://localhost:5173/product_detail/${ProductId}`,
           },
         },
-        {
-          title: "앱으로 이동",
-          link: {
-            mobileWebUrl: "https://developers.kakao.com",
-            webUrl: "https://developers.kakao.com",
+        buttons: [
+          {
+            title: "웹으로 이동",
+            link: {
+              mobileWebUrl: `http://localhost:5173/product_detail/${ProductId}`,
+              webUrl: `http://localhost:5173/product_detail/${ProductId}`,
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
+    } catch (error) {
+      console.error("KakaoShare error:", error);
+    }
   };
 
   const onClickKakao = () => {
     KaKaoShare(
       product.productName,
       product.imageURL,
-      product.price.toLocaleString()
+      product.price.toLocaleString(),
+      ProductId
     );
   };
 
@@ -185,7 +164,7 @@ const Detail = ({ ProductId }) => {
           <div className="priceGraph">
             <div className="graph_ment">
               <div>
-                <p className={`three-month three-month_${term}`}>3개월</p>
+                {/* <p className={`three-month three-month_${term}`}>3개월</p>
                 <p>/</p>
                 <p className={`whole whole_${term}`}>전체</p>
                 <img
@@ -193,7 +172,7 @@ const Detail = ({ ProductId }) => {
                   alt=""
                   // onClick={onClickTerm}
                   // 전체 그래프 안 만들어짐
-                />
+                /> */}
               </div>
               <p className="graph_p">가격 그래프</p>
             </div>
@@ -261,25 +240,6 @@ const Detail = ({ ProductId }) => {
           </div>
         </div>
       </div>
-      {/* <div className="recommend">
-        <p className="recommend_ment">추천 유사 상품</p>
-        <div className="recomment_map">
-          {recommendedProducts.map((product) => (
-            <ProductCard
-              key={product.ProductId}
-              ProductId={product.ProductId}
-              Category={product.Category}
-              Brand={product.Brand}
-              ProductName={product.ProductName}
-              Price={product.Price}
-              DiscountRate={product.DiscountRate}
-              OriginalPrice={product.OriginalPrice}
-              ProductURL={product.ProductURL}
-              ImageURL={product.ImageURL}
-            />
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };

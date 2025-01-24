@@ -1,6 +1,6 @@
 import "./SearchBox.css";
 import { IoIosSearch } from "react-icons/io";
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../App";
 
@@ -17,7 +17,7 @@ const SearchBox = () => {
   const handleSearch = () => {
     if (searchRef.current.trim()) {
       setSearchQuery(searchRef.current);
-      console.log("검색창:", searchRef.current);
+      // console.log("검색창:", searchRef.current);
       nav("/product_search");
     } else {
       alert("원하는 상품을 검색하세요!");
@@ -39,7 +39,8 @@ const SearchBox = () => {
   // 상품명/상품코드 변경
   const onClickSearch = () => {
     if (searchType === "name") {
-      setSearchType("code");
+      alert("상품 코드 검색 기능이 준비 중입니다.");
+      // setSearchType("code");
     } else {
       setSearchType("name");
     }

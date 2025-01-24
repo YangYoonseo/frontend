@@ -25,7 +25,7 @@ const Navbar = () => {
       <FiUser
         className="mypage"
         onClick={() => {
-          alert("아직 로그인 기능이 완성되지 않았습니다");
+          alert("아직 로그인 기능이 완성되지 않았습니다. 조금만 기다려주세요!");
         }}
       />
     </div>

@@ -94,11 +94,11 @@
 .Detail .title .priceGraph .graph_ment div {
   width: 200px;
   display: flex;
-  gap: 6px;
 }
 
 .Detail .title .priceGraph .graph_ment div p {
   font-size: 20px;
+  margin-right: auto;
 }
 
 .Detail .title .priceGraph .graph_ment div .three-month_three-month,

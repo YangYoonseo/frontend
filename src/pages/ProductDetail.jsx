@@ -1,5 +1,5 @@
 import Navbar from "../components/common/Navbar";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Detail from "../components/com_detail/Detail";
 
 const ProductDetail = () => {

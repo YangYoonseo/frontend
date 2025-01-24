@@ -11,8 +11,6 @@ const ProductCard = ({
   ProductName,
   Price,
   DiscountRate,
-  OriginalPrice,
-  ProductURL,
   ImageURL,
 }) => {
   const nav = useNavigate();
