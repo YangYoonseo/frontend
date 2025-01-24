@@ -81,6 +81,29 @@ const Detail = ({ ProductId }) => {
     return `${date.getMonth() + 1}/${date.getDate()}`;
   };
 
+  const currentDate = new Date().getTime();
+
+  const xDomain = data.map((item) => item.date); // X축은 data에 실제 있는 날짜로만 표시
+  const minDate = Math.min(...data.map((item) => item.date));
+  const minPrice = data.find((item) => item.date === minDate)?.price;
+
+  const lineDataPast = [
+    ...Array.from({ length: 3 }, (_, index) => ({
+      date: minDate - (index + 1) * 24 * 60 * 60 * 1000, // 과거 날짜 생성
+      price: minPrice, // 최소 날짜 가격 고정
+    })),
+    { date: minDate, price: minPrice },
+  ];
+
+  const maxDate = Math.max(...data.map((item) => item.date));
+  const maxPrice = data.find((item) => item.date === maxDate)?.price;
+
+  const lineDataCurrent = [
+    ...data.filter((item) => item.date >= maxDate),
+    { date: currentDate, price: maxPrice }, // 현재 시점 데이터 추가
+  ];
+  const combinedData = [...data, ...lineDataCurrent];
+
   // Y축 범위를 비율로 설정하는 부분
   const priceRange = product.highestPrice - product.lowestPrice;
   const margin = priceRange * 0.1; // 가격 차이의 10%를 margin으로 설정
@@ -127,10 +150,6 @@ const Detail = ({ ProductId }) => {
       ProductId
     );
   };
-
-  // x축 시작, 끝 날짜
-  const minDate = Math.min(...data.map((item) => item.date)); // 첫 번째 날짜
-  const maxDate = Math.max(...data.map((item) => item.date)); // 마지막 날짜
 
   //   평균 가격
   const avgPrice =
@@ -188,11 +207,13 @@ const Detail = ({ ProductId }) => {
                     tickFormatter={formatDate}
                     scale="time"
                     type="number"
-                    domain={[minDate, maxDate]} // 첫 번째 날짜부터 마지막 날짜로 설정
+                    domain={[Math.min(...xDomain), currentDate]} // 첫 번째 날짜부터 오늘 날짜로 설정
+                    ticks={xDomain}
                     stroke="#FFFFFF"
                     tick={{ fontSize: 17 }}
                     interval="preserveStartEnd" // 시작과 끝을 보존하는 설정
                   />
+                  {console.log(data)}
                   <YAxis
                     domain={[
                       product.lowestPrice - margin,
@@ -220,12 +241,30 @@ const Detail = ({ ProductId }) => {
                       );
                     }}
                   />
-                  <Line type="linear" dataKey="price" stroke="#FF7777" />
-                  <ReferenceLine
+                  {/* 과거 데이터(회색) 라인 */}
+                  <Line
+                    type="linear"
+                    dataKey="price"
+                    data={lineDataPast} // 과거 데이터만 표시
+                    stroke="#B0B0B0" // 회색
+                    dot={false}
+                    activeDot={false}
+                  />
+                  {/* 현재 데이터(빨간색) 라인 */}
+                  <Line
+                    type="linear"
+                    dataKey="price"
+                    data={combinedData} // 현재 데이터만 표시
+                    stroke="#FF7777" // 빨간색
+                    strokeWidth={1.5} // 선 두께 설정 (기본값은 1)
+                    dot={false}
+                    activeDot={false}
+                  />
+                  {/* <ReferenceLine
                     y={product.currentPrice || 0}
                     stroke="#FF7777"
                     strokeDasharray="10 10"
-                  />
+                  /> */}
                 </LineChart>
               </ResponsiveContainer>
             </div>
