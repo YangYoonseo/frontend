@@ -49,7 +49,7 @@
 }
 
 .Detail .title h3 {
-  width: 600px; /* 360px -> 1.5배 */
+  width: 100%; /* 360px -> 1.5배 */
   margin: 0;
   color: #fff;
   font-size: 30px; /* 21px -> 1.5배 */
@@ -133,66 +133,71 @@
   height: 1.5px; /* 1px -> 1.5배 */
 }
 
-.Detail .recommend {
-  margin: 75px 0; /* 50px -> 1.5배 */
-}
-
-.Detail .recommend .recommend_ment {
-  color: white;
-  text-align: center;
-  font-size: 30px; /* 20px -> 1.5배 */
-  font-weight: 500;
-}
-
-.Detail .recommend .recomment_map {
-  display: flex;
-  gap: 15px; /* 10px -> 1.5배 */
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.Detail .recommend .recomment_map .ProductCard {
-  width: 255px; /* 170px -> 1.5배 */
-  height: 525px; /* 350px -> 1.5배 */
-}
-
-.Detail .recommend .recomment_map .ProductCard .product_img img {
-  width: 250.5px; /* 167px -> 1.5배 */
-  height: 306px; /* 204px -> 1.5배 */
-}
-
-.Detail .recommend .recomment_map .ProductCard .LikeButton button {
-  top: 260px;
-  left: 200px;
-}
-
-.Detail .recommend .recomment_map .ProductCard .LikeButton img {
-  width: 41.75px;
-  height: 41.75px;
-}
-
-.Detail .recommend .recomment_map .ProductCard .product_info h4 {
-  margin: 10px 0;
-  font-size: 21px; /* 14px -> 1.5배 */
-  font-weight: 700;
-}
-
-.Detail .recommend .recomment_map .ProductCard .product_info .title {
-  margin: 0;
-  font-size: 18px;
-  padding: 0;
-}
-
-.Detail .recommend .recomment_map .ProductCard .product_price {
-  font-size: 21px; /* 14px -> 1.5배 */
-  font-weight: 700;
-  margin: 7px 0;
-}
-
 .Detail .priceGraph .graph_div {
   width: 525px;
   height: 305px;
+}
+
+/* 모바일 웹 */
+@media (max-width: 480px) {
+  .Detail {
+    width: 50%;
+  }
+
+  .Detail_main .productImg {
+    height: 15%;
+  }
+
+  .Detail .title .like_share .LikeButton img {
+    width: 21px;
+  }
+
+  .Detail .title .like_share .share {
+    width: 17px;
+    padding-bottom: 3px;
+  }
+
+  .Detail .title p {
+    margin: 0;
+    font-size: 16px; /* 18px -> 1.5배 */
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .Detail_main .title h3 {
+    padding: 0;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 600;
+    line-height: 150%;
+  }
+
+  .Detail .title .link_price button {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+
+  .Detail .title .link_price p,
+  .Detail .title .link_price span {
+    font-size: 21px;
+  }
+
+  .Detail .title .priceGraph .graph_ment .graph_p {
+    font-size: 15px;
+    width: 80px;
+  }
+
+  .Detail .title .priceGraph .price4 p {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1200px) {
+  .Detail_main .title h3 {
+    padding: 0;
+    font-size: 23px;
+    width: 100%;
+  }
 }
 
 @media (max-width: 1200px) {
