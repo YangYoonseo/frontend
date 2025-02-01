@@ -67,7 +67,7 @@
 /* 모바일 */
 @media (max-width: 480px) {
   .Gift {
-    width: 200px;
+    width: 250px;
     font-size: 10px;
   }
 }

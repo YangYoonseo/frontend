@@ -23,8 +23,8 @@
 
 .Navbar .gift {
   color: white;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
 }
 
 .popup-gift {
@@ -50,7 +50,7 @@
   .Navbar .home,
   .Navbar .logo,
   .Navbar .gift {
-    height: 40%;
+    height: 36%;
   }
 }
 
