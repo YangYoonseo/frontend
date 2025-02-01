@@ -1,0 +1,73 @@
+.Gift {
+  width: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fffdf7;
+  font-family: "Arial", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  z-index: 1000;
+}
+
+.Gift .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  border: none;
+  background-color: #ffffff;
+  font-size: 15px;
+}
+
+.Gift h2 {
+  color: #222;
+  text-align: center;
+}
+
+.Gift p {
+  margin: 10px 0;
+}
+
+.Gift strong {
+  color: #d9534f;
+}
+
+.coffee {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.support-link {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #f0a500;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.support-link:hover {
+  background-color: #d48c00;
+}
+
+.team {
+  text-align: right;
+  font-style: italic;
+  color: #666;
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  .Gift {
+    width: 200px;
+    font-size: 10px;
+  }
+}
