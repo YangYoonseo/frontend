@@ -11,7 +11,7 @@ const LikeButton = () => {
     e.stopPropagation(); // 클릭 이벤트가 상위 요소로 전파되지 않도록 막음
     alert("로그인이 필요합니다");
     // setLiked(!liked); // 하트 상태 변경
-    console.log("하트 버튼 누름");
+    // console.log("하트 버튼 누름");
   };
 
   return (
